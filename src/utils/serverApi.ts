@@ -1,11 +1,6 @@
-import { ChampionResponse } from "@/app/api/types/Champion";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
-interface Item {
-  id: string;
-  name: string;
-  description: string;
-  // 필요한 다른 필드들도 추가
-}
+import { ChampionResponse } from "@/app/api/types/Champion";
 
 export async function fetchChampionList() {
   const res = await fetch(
@@ -37,10 +32,7 @@ export async function fetchItemList() {
     throw new Error("Failed to fetch item data");
   }
   const data = await res.json();
-
-  const itemData: Record<string, Item> = data.data;
-
-  return Object.entries(itemData).map(([id, item]) => ({
+  return Object.entries(data.data).map(([id, item]: [string, any]) => ({
     id,
     ...item,
   }));
