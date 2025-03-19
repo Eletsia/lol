@@ -1,5 +1,12 @@
 import { ChampionResponse } from "@/app/api/types/Champion";
 
+interface Item {
+  id: string;
+  name: string;
+  description: string;
+  // 필요한 다른 필드들도 추가
+}
+
 export async function fetchChampionList() {
   const res = await fetch(
     "https://ddragon.leagueoflegends.com/cdn/15.5.1/data/ko_KR/champion.json"
@@ -30,7 +37,10 @@ export async function fetchItemList() {
     throw new Error("Failed to fetch item data");
   }
   const data = await res.json();
-  return Object.entries(data.data).map(([id, item]: [string, any]) => ({
+
+  const itemData: Record<string, Item> = data.data;
+
+  return Object.entries(itemData).map(([id, item]) => ({
     id,
     ...item,
   }));
